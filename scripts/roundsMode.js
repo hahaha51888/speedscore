@@ -217,6 +217,33 @@ const thisRound = document.getElementById("r-" + GlobalUserData.rounds[rowIndex]
 writeRoundToTable(thisRound,rowIndex);
 }
 
+
+function deleteRound(roundId) {
+  const index = GlobalUserData.rounds.findIndex(r => r.roundNum === roundId);
+  if (index === -1) return; 
+  GlobalUserData.rounds.splice(index, 1);
+  localStorage.setItem(GlobalUserData.accountInfo.email, JSON.stringify(GlobalUserData));
+  populateRoundsTable(); 
+}
+
+
+function confirmDelete(index) {
+  const modal = document.getElementById("confirmDeleteModal");
+  modal.classList.remove("hidden");
+
+  document.getElementById("confirmDeleteYes").onclick = () => {
+    deleteRound(index);
+    modal.classList.add("hidden");
+  };
+
+  document.getElementById("confirmDeleteNo").onclick = () => {
+    modal.classList.add("hidden");
+  };
+}
+
+
+
+
 /*************************************************************************
 * @function populateRoundsTable 
 * @desc 
